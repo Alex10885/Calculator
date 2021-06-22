@@ -1,20 +1,26 @@
 package Calculator;
 
-import java.util.Scanner;
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class CalculatorExec {
+
     public static void main(String[] args) {
+        try{
+            System.out.println("Калькулятор для выражений вида: \"Число1 Операция Число2\", через пробел. Допускаются числа от 1 до 10 или от I до X включительно. Операции: + - * /");
+            System.out.print("Введите выражение: ");
+            BufferedReader bReader = new BufferedReader(new InputStreamReader(System.in));
+            String calcString = bReader.readLine();
 
-        System.out.println("Программа позволяет вычислять целые числа типа 'Число1 действие(+, -, *, /) Число2' Диапазон от 1 до 10 и от I до X" );
-        System.out.println("Введите выражение: ");
-        Operation obj = new Operation();
-        Scanner num = new Scanner(System.in);
-        Integer a = num.nextInt();
-        char mathOperation = num.next().charAt(0);
-        Integer b = num.nextInt();
+            Calculations calc = new Calculations();
+            String result = calc.result(calcString);
+            System.out.println("Ответ: " + result);
+        }
+        catch(CalcException | IOException e){
 
-        obj.calk(a, mathOperation, b);
+        }
 
     }
+
 }
