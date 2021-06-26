@@ -7,7 +7,7 @@ public class Calculations {
     private int num1, num2;     //числа в выражении
     private String operator;    //оператор в выражении, допускается: +-*/
 
-    //---выполнение арифметического выражения (только целые числа в ответе)
+    //---выполнение целочисленного арифметического выражения
     private int calcExp(int x, String operation, int y) {
         int res;
         switch (operation) {
@@ -29,10 +29,10 @@ public class Calculations {
         return res;
     }
 
-    //---public метод проверок и с выводом результата
+    //---public метод проверок и  вывод результата
     public String result(String exp) throws CalcException {
         boolean isRomanExp;     // ---Признак, что числа римские
-        Parse parse = new Parse();
+        Parser parser = new Parser();
 
         //---разбиваем исходное выражение String по разделителю " "
         List<String> expItems = Arrays.asList(exp.split(" "));
@@ -43,20 +43,20 @@ public class Calculations {
         }
 
         //--- проверка оператора, должен быть: + - * /
-        if (parse.checkOperator(expItems.get(1))) {
+        if (parser.checkOperator(expItems.get(1))) {
             operator = expItems.get(1);
         } else {
             throw new CalcException("ОШИБКА. Оператор '" + expItems.get(1) + "' не корректен, должен быть: + - * / ");
         }
 
         //---проверка чисел, должны быть оба арабские или оба римские
-        if (parse.isNumeric(expItems.get(0)) && parse.isNumeric(expItems.get(2))) {      //---проверяем, что оба числа арабские
+        if (parser.isNumeric(expItems.get(0)) && parser.isNumeric(expItems.get(2))) {      //---проверяем, что оба числа арабские
             num1 = Integer.parseInt(expItems.get(0));
             num2 = Integer.parseInt(expItems.get(2));
             isRomanExp = false;
-        } else if (parse.isRoman(expItems.get(0)) && parse.isRoman(expItems.get(2))) {   //---проверяем, что оба числа римские
-            num1 = parse.romeToArabConvert(expItems.get(0));
-            num2 = parse.romeToArabConvert(expItems.get(2));
+        } else if (parser.isRoman(expItems.get(0)) && parser.isRoman(expItems.get(2))) {   //---проверяем, что оба числа римские
+            num1 = parser.romeToArabConvert(expItems.get(0));
+            num2 = parser.romeToArabConvert(expItems.get(2));
             isRomanExp = true;
         } else {    //--- числа не соответствуют
             throw new CalcException("ОШИБКА. Числа должны быть оба арабские или оба римские");
@@ -77,7 +77,7 @@ public class Calculations {
         //--- если числа римские, то конвертируем в римские и возвращаем результат
         if (isRomanExp) {
             String sign = res < 0 ? "-" : "";
-            return sign + parse.arabToRomeConvert(Math.abs(res));
+            return sign + parser.arabToRomeConvert(Math.abs(res));
         }
 
         //--- возвращаем в ответ - арабское число

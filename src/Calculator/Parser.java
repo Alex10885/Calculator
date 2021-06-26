@@ -3,7 +3,7 @@ package Calculator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Parse {
+public class Parser {
     // вводим соответствие римские-арабские числа (I..X, 1..10)
     private final Map<String, Integer> romeArabMap = new HashMap<>();
 
@@ -11,7 +11,7 @@ public class Parse {
     private final int[] arabDigit = new int[]{100, 90, 50, 40, 10, 9, 5, 4, 1};
     private final String[] romeDigit = new String[]{"C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
 
-    public Parse() {
+    public Parser() {
         romeArabMap.put("I", 1);
         romeArabMap.put("II", 2);
         romeArabMap.put("III", 3);
